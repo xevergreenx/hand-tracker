@@ -4,6 +4,8 @@ import torch.nn as nn
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 
+from model import GestureNet
+
 X = np.load("data/X.npy")
 Y = np.load("data/Y.npy")
 
@@ -11,20 +13,6 @@ X = torch.tensor(X, dtype=torch.float32)
 Y = torch.tensor(Y, dtype=torch.long)
 
 X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.2, random_state=42)
-
-class GestureNet(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Linear(63, 128),
-            nn.ReLU(),
-            nn.Linear(128, 64),
-            nn.ReLU(),
-            nn.Linear(64, 2)
-        )
-
-    def forward(self, x):
-        return self.net(x)
 
 model = GestureNet()
 
